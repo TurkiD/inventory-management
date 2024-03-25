@@ -1,3 +1,5 @@
+using ClassItem;
+
 namespace ClassStore
 {
     class Store
@@ -10,11 +12,13 @@ namespace ClassStore
         {
             try
             {
-                if (item == null) { throw new ArgumentNullException(); }
+                ArgumentNullException.ThrowIfNull(item);
 
-                if (items.Contains(item)) { throw new ArgumentException(); }
+                bool isExist = items.Any((i) => i.Name == item.Name);
+                if (isExist) { throw new ArgumentException(); }
 
                 items.Add(item);
+                Console.WriteLine($"Item {item.Name} Added");
             }
             catch (ArgumentNullException)
             {
@@ -30,14 +34,53 @@ namespace ClassStore
         {
             try
             {
-                if (!items.Contains(item)) { throw new ArgumentException(); }
+                if (items.Count > 0)
+                {
+                    ClassItem.Item itemToBeDeleted = items.FirstOrDefault(i => i.Name == item.Name) ??
+                    throw new ArgumentNullException();
 
-                items.Remove(item);
+                    items.Remove(itemToBeDeleted);
+                    Console.WriteLine($"Item {itemToBeDeleted.Name} Deleted");
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
             }
-            catch (ArgumentException)
+            catch (ArgumentNullException)
             {
-                Console.WriteLine($"ERROR: Item {item.Name} Not Exist");
+                Console.WriteLine($"ERROR: Item Can Not Be Null");
             }
+            catch (Exception)
+            {
+                Console.WriteLine($"ERROR: Can Not Delete Item From An Empty List");
+            }
+        }
+
+        // Return the total amount of items
+        public int GetCurrentVolume()
+        {
+            try
+            {
+                if (items.Count == 0)
+                {
+                    throw new Exception();
+                }
+
+                return items.Sum(item => item.Quantity);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine($"ERROR: Item List Is Empty");
+                return 0;
+            }
+        }
+
+        // Need to improve
+        public ClassItem.Item FindItemByName(ClassItem.Item item)
+        {
+            return items.FirstOrDefault(i => i.Name == item.Name) ?? throw new ArgumentNullException();
         }
 
         // public override string ToString()
@@ -45,7 +88,8 @@ namespace ClassStore
         //     return string.Join("\n", items);
         // }
 
-        public void PrintItemList() {
+        public void PrintItemList()
+        {
             foreach (var item in items)
             {
                 Console.WriteLine($"{item}");

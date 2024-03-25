@@ -9,7 +9,7 @@ namespace ClassItem
             get { return quantity; }
             set { quantity = value; }
         }
-        private DateTime Date;
+        private DateTime Date { get; }
 
         public Item(string name, int quantity, DateTime date = default)
         {
@@ -24,7 +24,7 @@ namespace ClassItem
 
         public override string ToString()
         {
-            return $"Items Name: {Name} Quantity: {Quantity} Date: {Date}";
+            return $"Items Name: {Name}, Quantity: {Quantity}, Date: {Date}";
         }
 
     }
