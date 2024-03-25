@@ -27,12 +27,5 @@ namespace ClassItem
             return $"Items Name: {Name} Quantity: {Quantity} Date: {Date}";
         }
 
-        public static void Main(string[] args)
-        {
-            var waterBottle = new Item("Water Bottle", 10, new DateTime(2023, 1, 1));
-
-            Console.WriteLine(waterBottle.ToString());
-
-        }
     }
 }
