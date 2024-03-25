@@ -1,0 +1,7 @@
+namespace ClassStore
+{
+    class Store
+    {
+        
+    }
+}
