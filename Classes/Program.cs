@@ -41,10 +41,14 @@ class Program
 
         // store.PrintItemList();
 
-        Console.WriteLine(store.FindItemByName(sunscreen));
-        
-
+        // Console.WriteLine(store.FindItemByName(sunscreen));
         Console.WriteLine($"Number of Items: {store.GetCurrentVolume()}");
-        
+
+        var sortedItems = ClassStore.Store.SortByNameAsc();
+        foreach (var item in sortedItems)
+        {
+            Console.WriteLine($"{item}");
+
+        }
     }
 }

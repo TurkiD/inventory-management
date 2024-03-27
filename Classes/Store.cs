@@ -78,15 +78,15 @@ namespace ClassStore
         }
 
         // Need to improve
-        public ClassItem.Item FindItemByName(ClassItem.Item item)
+        public Item FindItemByName(ClassItem.Item item)
         {
             return items.FirstOrDefault(i => i.Name == item.Name) ?? throw new ArgumentNullException();
         }
 
-        // public override string ToString()
-        // {
-        //     return string.Join("\n", items);
-        // }
+        public IEnumerable<ClassItem.Item> SortByNameAsc()
+        {
+            return items.OrderBy(item => item.Name);
+        }
 
         public void PrintItemList()
         {
