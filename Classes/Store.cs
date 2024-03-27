@@ -6,15 +6,18 @@ namespace ClassStore
     {
         private static List<ClassItem.Item> items = new List<ClassItem.Item> { };
         private int maxCapacity;
-
+        public enum SortOrder
+        {
+            ASC,
+            DEC
+        }
         public Store(int maxCapacity)
         {
             this.maxCapacity = maxCapacity;
         }
 
-        // Here start methods
         // add/delete items to/from the collection
-        public void AddItem(ClassItem.Item item)
+        public void AddItem(Item item)
         {
             try
             {
@@ -45,7 +48,7 @@ namespace ClassStore
             }
         }
 
-        public void DeleteItem(ClassItem.Item item)
+        public void DeleteItem(Item item)
         {
             try
             {
@@ -93,24 +96,23 @@ namespace ClassStore
         }
 
         // Need to improve
-        public Item FindItemByName(ClassItem.Item item)
+        public Item FindItemByName(Item item)
         {
             return items.FirstOrDefault(i => i.Name == item.Name) ?? throw new ArgumentNullException();
         }
 
-        public IEnumerable<ClassItem.Item> SortByNameAsc()
+        public List<Item> SortByNameAsc()
         {
-            return items.OrderBy(item => item.Name);
+            return items.OrderBy(item => item.Name).ToList();
         }
 
-
-
-        public void PrintItemList()
+        public IEnumerable<Item> SortByDate(SortOrder sortOrder)
         {
-            foreach (var item in items)
+            if (sortOrder == SortOrder.ASC)
             {
-                Console.WriteLine($"{item}");
+                return items.OrderBy(item => item.Date);
             }
+            return items.OrderByDescending(item => item.Date);
         }
     }
 }

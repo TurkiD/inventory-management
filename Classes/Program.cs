@@ -44,12 +44,20 @@ class Program
         // store.PrintItemList();
 
         // Console.WriteLine(store.FindItemByName(sunscreen));
-        Console.WriteLine($"Number of Items: {store.GetCurrentVolume()}");
+        // Console.WriteLine($"Number of Items: {store.GetCurrentVolume()}");
 
-        var sortedItems = store.SortByNameAsc();
-        foreach (var item in sortedItems)
+        // var sortedItems = store.SortByNameAsc();
+        // foreach (var item in sortedItems)
+        // {
+        //     Console.WriteLine($"{item}");
+        // }
+
+        var sortByDate = store.SortByDate(ClassStore.Store.SortOrder.DEC);
+
+        foreach (var item in sortByDate)
         {
             Console.WriteLine($"{item}");
+            
         }
     }
 }
