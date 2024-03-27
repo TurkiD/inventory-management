@@ -18,8 +18,9 @@ class Program
         var batteries = new ClassItem.Item("Batteries", 10);
         var umbrella = new ClassItem.Item("Umbrella", 5);
         var sunscreen = new ClassItem.Item("Sunscreen", 8);
+        var shoes = new ClassItem.Item("Nike", 300);
 
-        var store = new ClassStore.Store();
+        var store = new ClassStore.Store(300);
 
         store.AddItem(waterBottle);
         store.AddItem(chocolateBar);
@@ -36,8 +37,9 @@ class Program
         store.AddItem(batteries);
         store.AddItem(umbrella);
         store.AddItem(sunscreen);
+        // store.AddItem(shoes);
 
-        store.DeleteItem(sunscreen);
+        // store.DeleteItem(sunscreen);
 
         // store.PrintItemList();
 
@@ -48,7 +50,6 @@ class Program
         foreach (var item in sortedItems)
         {
             Console.WriteLine($"{item}");
-
         }
     }
 }

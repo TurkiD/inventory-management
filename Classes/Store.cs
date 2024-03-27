@@ -5,6 +5,12 @@ namespace ClassStore
     class Store
     {
         private static List<ClassItem.Item> items = new List<ClassItem.Item> { };
+        private int maxCapacity;
+
+        public Store(int maxCapacity)
+        {
+            this.maxCapacity = maxCapacity;
+        }
 
         // Here start methods
         // add/delete items to/from the collection
@@ -12,6 +18,10 @@ namespace ClassStore
         {
             try
             {
+                if (GetCurrentVolume() + item.Quantity > maxCapacity)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
                 ArgumentNullException.ThrowIfNull(item);
 
                 bool isExist = items.Any((i) => i.Name == item.Name);
@@ -19,6 +29,11 @@ namespace ClassStore
 
                 items.Add(item);
                 Console.WriteLine($"Item {item.Name} Added");
+            }
+
+            catch (ArgumentOutOfRangeException)
+            {
+                Console.WriteLine($"ERROR: Quantity of The Item {item.Name} Is Exceeding The Store Limit");
             }
             catch (ArgumentNullException)
             {
@@ -87,6 +102,8 @@ namespace ClassStore
         {
             return items.OrderBy(item => item.Name);
         }
+
+
 
         public void PrintItemList()
         {
