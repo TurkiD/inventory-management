@@ -44,7 +44,7 @@ class Program
         // Console.WriteLine(store.FindItemByName(sunscreen));
         Console.WriteLine($"Number of Items: {store.GetCurrentVolume()}");
 
-        var sortedItems = ClassStore.Store.SortByNameAsc();
+        var sortedItems = store.SortByNameAsc();
         foreach (var item in sortedItems)
         {
             Console.WriteLine($"{item}");
