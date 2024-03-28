@@ -1,26 +1,28 @@
+using ClassItem;
+using ClassStore;
 class Program
 {
     public static void Main(string[] args)
     {
         // items example - You do not need to follow exactly the same
-        var waterBottle = new ClassItem.Item("Water Bottle", 10, new DateTime(2023, 1, 1));
-        var chocolateBar = new ClassItem.Item("Chocolate Bar", 15, new DateTime(2023, 2, 1));
-        var notebook = new ClassItem.Item("Notebook", 5, new DateTime(2023, 3, 1));
-        var pen = new ClassItem.Item("Pen", 20, new DateTime(2023, 4, 1));
-        var tissuePack = new ClassItem.Item("Tissue Pack", 30, new DateTime(2023, 5, 1));
-        var chipsBag = new ClassItem.Item("Chips Bag", 25, new DateTime(2023, 6, 1));
-        var sodaCan = new ClassItem.Item("Soda Can", 8, new DateTime(2023, 7, 1));
-        var soap = new ClassItem.Item("Soap", 12, new DateTime(2023, 8, 1));
-        var shampoo = new ClassItem.Item("Shampoo", 40, new DateTime(2023, 9, 1));
-        var toothbrush = new ClassItem.Item("Toothbrush", 50, new DateTime(2023, 10, 1));
-        var coffee = new ClassItem.Item("Coffee", 20);
-        var sandwich = new ClassItem.Item("Sandwich", 15);
-        var batteries = new ClassItem.Item("Batteries", 10);
-        var umbrella = new ClassItem.Item("Umbrella", 5);
-        var sunscreen = new ClassItem.Item("Sunscreen", 8);
-        var shoes = new ClassItem.Item("Nike", 300);
+        var waterBottle = new Item("Water Bottle", 10, new DateTime(2023, 1, 1));
+        var chocolateBar = new Item("Chocolate Bar", 15, new DateTime(2023, 2, 1));
+        var notebook = new Item("Notebook", 5, new DateTime(2023, 3, 1));
+        var pen = new Item("Pen", 20, new DateTime(2023, 4, 1));
+        var tissuePack = new Item("Tissue Pack", 30, new DateTime(2023, 5, 1));
+        var chipsBag = new Item("Chips Bag", 25, new DateTime(2023, 6, 1));
+        var sodaCan = new Item("Soda Can", 8, new DateTime(2023, 7, 1));
+        var soap = new Item("Soap", 12, new DateTime(2023, 8, 1));
+        var shampoo = new Item("Shampoo", 40, new DateTime(2023, 9, 1));
+        var toothbrush = new Item("Toothbrush", 50, new DateTime(2023, 10, 1));
+        var coffee = new Item("Coffee", 20);
+        var sandwich = new Item("Sandwich", 15);
+        var batteries = new Item("Batteries", 10);
+        var umbrella = new Item("Umbrella", 5);
+        var sunscreen = new Item("Sunscreen", 8);
+        var shoes = new Item("Nike", 300);
 
-        var store = new ClassStore.Store(300);
+        var store = new Store(300);
 
         store.AddItem(waterBottle);
         store.AddItem(chocolateBar);
@@ -37,27 +39,52 @@ class Program
         store.AddItem(batteries);
         store.AddItem(umbrella);
         store.AddItem(sunscreen);
-        // store.AddItem(shoes);
+        store.AddItem(shoes);
 
-        // store.DeleteItem(sunscreen);
+        store.DeleteItem(sunscreen);
 
-        // store.PrintItemList();
+        Console.WriteLine($"\nNumber of Items:\n {store.GetCurrentVolume()}");
 
-        // Console.WriteLine(store.FindItemByName(sunscreen));
-        // Console.WriteLine($"Number of Items: {store.GetCurrentVolume()}");
+        Console.WriteLine($"Items Searched:\n {store.FindItemByName(umbrella)}");
 
-        // var sortedItems = store.SortByNameAsc();
-        // foreach (var item in sortedItems)
-        // {
-        //     Console.WriteLine($"{item}");
-        // }
+        Console.WriteLine();
 
-        var sortByDate = store.SortByDate(ClassStore.Store.SortOrder.DEC);
+        var sortedItems = store.SortByNameAsc();
+        Console.WriteLine($"Sorted Items by name: ");
+        foreach (var item in sortedItems)
+        {
+            Console.WriteLine($"{item}");
+        }
 
+        Console.WriteLine();
+
+        var sortByDate = store.SortByDate(Store.SortOrder.Descending);
         foreach (var item in sortByDate)
         {
             Console.WriteLine($"{item}");
-            
+
+        }
+
+        Console.WriteLine();
+
+        var groupByDate = store.GroupByDate();
+        foreach (var group in groupByDate)
+        {
+            if (group.Count > 0)
+            {
+                if (group == groupByDate[0])
+                {
+                    Console.WriteLine("New Arrival Items:");
+                }
+                else
+                {
+                    Console.WriteLine("Old Items:");
+                }
+                foreach (var item in group)
+                {
+                    Console.WriteLine($" - {item.Name}, Created: {item.Date.ToShortDateString()}");
+                }
+            }
         }
     }
 }

@@ -2,11 +2,11 @@ namespace ClassItem
 {
     class Item
     {
-        public string Name { get; }
+        public string? Name { get; }
         public int Quantity
         {
-            get ;
-            private set ; 
+            get;
+            private set;
         }
         public DateTime Date { get; }
 
@@ -16,14 +16,17 @@ namespace ClassItem
             {
                 Console.WriteLine($"Quantity can not be negative");
             }
-            Name = name;
-            Quantity = quantity;
-            Date = date == default ? DateTime.Now : date;
+            else
+            {
+                Name = name;
+                Quantity = quantity;
+                Date = date == default ? DateTime.Now : date;
+            }
         }
 
         public override string ToString()
         {
-            return $"Items Name: {Name}, Quantity: {Quantity}, Date: {Date}";
+            return $" - {Name}, Date: {Date}";
         }
 
     }

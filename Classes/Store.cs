@@ -4,12 +4,12 @@ namespace ClassStore
 {
     class Store
     {
-        private static List<ClassItem.Item> items = new List<ClassItem.Item> { };
+        private static List<ClassItem.Item> items = [];
         private int maxCapacity;
         public enum SortOrder
         {
-            ASC,
-            DEC
+            Ascending,
+            Descending
         }
         public Store(int maxCapacity)
         {
@@ -31,12 +31,12 @@ namespace ClassStore
                 if (isExist) { throw new ArgumentException(); }
 
                 items.Add(item);
-                Console.WriteLine($"Item {item.Name} Added");
+                Console.WriteLine($" - Item {item.Name} Added");
             }
 
             catch (ArgumentOutOfRangeException)
             {
-                Console.WriteLine($"ERROR: Quantity of The Item {item.Name} Is Exceeding The Store Limit");
+                Console.WriteLine($"ERROR: Quantity of The Item {item.Name} Is Exceeding The Store Limit Which is {maxCapacity}");
             }
             catch (ArgumentNullException)
             {
@@ -58,7 +58,7 @@ namespace ClassStore
                     throw new ArgumentNullException();
 
                     items.Remove(itemToBeDeleted);
-                    Console.WriteLine($"Item {itemToBeDeleted.Name} Deleted");
+                    Console.WriteLine($"\nItem {itemToBeDeleted.Name} Deleted");
                 }
                 else
                 {
@@ -96,9 +96,18 @@ namespace ClassStore
         }
 
         // Need to improve
-        public Item FindItemByName(Item item)
+        public Item? FindItemByName(Item item)
         {
-            return items.FirstOrDefault(i => i.Name == item.Name) ?? throw new ArgumentNullException();
+            try
+            {
+                return items.FirstOrDefault(i => i.Name == item.Name)
+                ?? throw new ArgumentNullException();
+            }
+            catch (ArgumentNullException)
+            {
+                Console.WriteLine($"ERROR: Item Not Exist");
+                return null;
+            }
         }
 
         public List<Item> SortByNameAsc()
@@ -108,11 +117,23 @@ namespace ClassStore
 
         public IEnumerable<Item> SortByDate(SortOrder sortOrder)
         {
-            if (sortOrder == SortOrder.ASC)
+            Console.WriteLine($"Sorted items By date in {sortOrder} order");
+            if (sortOrder == SortOrder.Ascending)
             {
                 return items.OrderBy(item => item.Date);
             }
             return items.OrderByDescending(item => item.Date);
+        }
+
+        public List<List<Item>> GroupByDate()
+        {
+            DateTime currentDate = DateTime.Now;
+            DateTime threeMonthsAgo = currentDate.AddMonths(-3);
+
+            var newItems = items.Where(item => item.Date >= threeMonthsAgo).ToList();
+            var oldItems = items.Where(item => item.Date < threeMonthsAgo).ToList();
+
+            return [newItems, oldItems];
         }
     }
 }
